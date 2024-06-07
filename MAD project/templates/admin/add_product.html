@@ -1,0 +1,23 @@
+{% extends "admin_layout.html" %}
+{% block content %}
+<h1>Add Product</h1>
+<form method="POST" action="{{ url_for('add_product', category_id=category.category_id) }}">
+  <div class="form-group">
+    <label for="product_name">Product Name:</label>
+    <input type="text" class="form-control" id="product_name" name="product_name" required>
+  </div>
+  <div class="form-group">
+    <label for="price">Price:</label>
+    <input type="number" class="form-control" id="price" name="price" required>
+  </div>
+  <div class="form-group">
+    <label for="image_url">Image URL:</label>
+    <input type="text" class="form-control" id="image_url" name="image_url" required>
+  </div>
+  <div class="form-group">
+    <label for="quantity">Quantity:</label>
+    <input type="number" class="form-control" id="quantity" name="quantity" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Add Product</button>
+</form>
+{% endblock content %}

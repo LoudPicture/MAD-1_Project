@@ -1,0 +1,39 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<h1 align="center">WELCOME {{ username }} !</h1>
+<form action="/home" method="POST">
+    <div class="input-group">
+        <input type="search" name="search_term" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary">search</button>
+    </div>
+</form>
+  
+<div class="categories">
+    {% for category in categories %}
+        <div class="category">
+            <h3>{{ category.category_name }}</h3>
+            <table>
+                <tr>
+                    {% for product in category.products %}
+                        <td>
+                            <div class="product">
+                                <img src="{{ product.image_url }}" alt="{{ product.product_name }}" style="width: 200px; height: 200px;">
+                                <h4>{{ product.product_name }}</h4>
+                                <p>{{ product.description }}</p>
+                                <p>Price: {{ product.price }} Rs</p>
+                                <p>Availability: {% if product.quantity > 0 %}In Stock{% else %}<span id="bg-steel">Out of Stock</span>{% endif %}</p>
+                                <div class="buttons">
+                                    <a href="{{ url_for('buy_product', product_id=product.product_id) }}" class="btn btn-primary">Buy</a>
+                                    <a href="{{ url_for('add_to_cart', product_id=product.product_id) }}" class="btn btn-secondary">Add to Cart</a>
+                                </div>
+                            </div>
+                        </td>
+                    {% endfor %}
+                    
+                </tr>
+            </table>
+            <br>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

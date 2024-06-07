@@ -1,0 +1,22 @@
+{% extends 'user_layout.html' %}
+
+{% block content %}
+  <h2>Purchase Product</h2>
+  <h3>Product Details</h3>
+  <p><strong>Product Name:</strong> {{ product.product_name }}</p>
+  <p><strong>Price:</strong> {{ product.price }} Rs</p>
+  <p><strong>Available Quantity:</strong> {{ product.quantity }}</p>
+
+  <h3>Buy Form</h3>
+  <form method="POST" action="{{ url_for('buy_product', product_id=product.product_id) }}">
+    <div class="form-group">
+      <label for="quantity">Quantity:</label>
+      <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Buy</button>
+  </form>
+
+  {% if error_message %}
+    <p class="text-danger">{{ error_message }}</p>
+  {% endif %}
+{% endblock %}

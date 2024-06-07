@@ -1,0 +1,9 @@
+{% extends "admin_layout.html" %}
+{% block content %}
+  <h2>Update Category</h2>
+  <form method="POST" action="{{ url_for('update_category', category_id=category.category_id) }}">
+    <label for="categoryName">Category Name:</label>
+    <input type="text" id="categoryName" name="category_name" value="{{ category.category_name }}" required>
+    <button type="submit">Update</button>
+  </form>
+{% endblock content %}

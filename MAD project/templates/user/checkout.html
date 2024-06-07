@@ -1,0 +1,16 @@
+{% extends "user_layout.html" %}
+{% block content %}
+    <h1>Checkout</h1>
+    <h3>Cart Items</h3>
+    <ul>
+        {% for cart_item, product in zip(cart_items, products) %}
+            <li>
+                {{ product.product_name }} - {{ product.price }} - Quantity: {{ cart_item.quantity }}
+            </li>
+        {% endfor %}
+    </ul>
+    <h3>Total Amount: {{ total_amount }}</h3>
+    <form action="{{ url_for('checkout') }}" method="POST">
+        <button type="submit">Place Order</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "admin_layout.html" %}
+{% block content %}
+<form action="/admin_home" method="POST">
+  <div class="input-group">
+      <input type="search" name="search_term" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      <button type="submit" class="btn btn-outline-primary">search</button>
+  </div>
+</form>
+
+<br>
+<button id="addCategoryButton" onclick="toggleForm()">Add Categories</button>
+
+<div id="categoryForm" style="display: none;">
+  <span class="close" onclick="toggleForm()">&times;</span>
+  <h3>Add New Category</h3>
+  <form>
+    <!-- Category form fields -->
+    <label for="categoryName">Category Name:</label>
+    <input type="text" id="categoryName" name="categoryName" required>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<br>
+<br>
+{% for category in categories %}
+<div class="category-item">
+  <a href="{{ url_for('show_category', category_id=category.category_id) }}">{{ category.category_name }}</a>
+  <div class="category-actions">
+    <button class="btn btn-primary" onclick="showUpdateForm('{{ category.category_id }}')">Update</button>
+    <form id="delete-form-{{ category.category_id }}" action="{{ url_for('delete_category', category_id=category.category_id) }}" method="POST" style="display: inline-block;">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ category.category_id }}')">Delete</button>
+    </form>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Update form placeholder -->
+<div id="update-form" style="display: none;"></div>
+
+<script>
+function showUpdateForm(categoryId) {
+  // Send a GET request to fetch the update form content
+  $.get("/categories/" + categoryId + "/update", function(data) {
+    // Set the update form content in the placeholder
+    $("#update-form").html(data);
+
+    // Display the update form
+    $("#update-form").show();
+  });
+}
+
+
+
+  function confirmDelete(categoryId) {
+    if (confirm("Are you sure you want to delete this category?")) {
+      // Submit the corresponding delete form
+      $("#delete-form-" + categoryId).submit();
+    }
+  }
+</script>
+
+{% endblock content %}

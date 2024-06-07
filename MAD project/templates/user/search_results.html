@@ -1,0 +1,22 @@
+{% extends "user_layout.html" %}
+{% block content %}
+  <h2>Search Results</h2>
+  {% if products %}
+    <ul>
+      {% for product in products %}
+      <div class="product">
+        <img src="{{ product.image_url }}" alt="{{ product.product_name }}" style="width: 200px; height: 200px;">
+        <h4>{{ product.product_name }}</h4>
+        <p>Price: {{ product.price }} Rs</p>
+        <p>Availability: {% if product.quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}</p>
+        <div class="buttons">
+            <a href="{{ url_for('buy_product', product_id=product.product_id) }}" class="btn btn-primary">Buy</a>
+            <a href="{{ url_for('add_to_cart', product_id=product.product_id) }}" class="btn btn-secondary">Add to Cart</a>
+        </div>
+    </div>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No products found.</p>
+  {% endif %}
+{% endblock %}

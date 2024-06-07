@@ -1,0 +1,32 @@
+{% extends "user_layout.html" %}
+
+{% block content %}
+    <div class="order-confirmation">
+        <h2>Order Confirmation</h2>
+        <p>Thank you for your order! Here are the details:</p>
+
+        <h3>Order ID: {{ order.order_id }}</h3>
+        <p>Order Date: {{ order.order_date }}</p>
+        <p>Total Amount: {{ order.total_amount }} Rs</p>
+
+        <h4>Order Items:</h4>
+        <table cellpadding="20">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            {% for order_item in order_items %}
+                <tr>
+                    <td>{{ order_item.product.product_name }}</td>
+                    <td>{{ order_item.product.price }} Rs</td>
+                    <td>{{ order_item.quantity }}</td>
+                    <td>{{ order_item.product.price * order_item.quantity }} Rs</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <p>Thank you for shopping with us!</p>
+    </div>
+{% endblock %}
